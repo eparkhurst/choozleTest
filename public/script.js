@@ -1,25 +1,39 @@
+$(document).ready(
+  displayData
+)
 
 var data = [4,6,'Hi',15.4432,'Noob',47,'Omaha',4.345,'Hike',12];
+var strings = [];
+var integers = [];
+var floats = []
+var grouped = false;
+
 
 function isFloat(n)
 {
     return Number(n) === n && n % 1 !== 0;
 }
 
-function sortNumbers(a,b){
+function sortNumbers(a,b)
+{
    return a-b;
 }
 
-function append(where, val) { $('#'+where+' > div').append('<div>'+val+'</div>'); };
+function addToDom(where, val)
+{
+   $('#'+where+' > div').append('<div>'+val+'</div>');
+}
 
-var strings = [];
-var integers = [];
-var floats = []
-var grouped = false;
+function appendArray(val, array)
+{
+  for (var i = 0; i < array.length; i++) {
+    addToDom(val , array[i])
+  }
+}
 
 function group()
 {
-  if(grouped ==false){
+  if(grouped === false){
 
     for(var i=0;i<data.length;i++)
     {
@@ -40,54 +54,42 @@ function group()
         }
     }
     grouped = true;
-
-
   }
 }
 
-function displayGroup(){
-  group();
-  appendArray("strings",strings);
-  appendArray("integers",integers);
-  appendArray("floats",floats);
-}
+function displayGroup()
+{
+  if(grouped==false)
+  {
+    group();
 
-
-
-function appendArray(val, array){
-  for (var i = 0; i < array.length; i++) {
-    append(val , array[i])
+    appendArray("strings",strings);
+    appendArray("integers",integers);
+    appendArray("floats",floats);
   }
 }
-
-
 
 function sort()
 {
-    group();
-
     $('div#sort > div > div').empty();
 
-    strings.sort();
-    integers.sort(sortNumbers);
-    floats.sort(sortNumbers);
+    sortedStrings = strings.sort();
+    sortedIntegers = integers.sort(sortNumbers);
+    sortedFloats = floats.sort(sortNumbers);
 
-    appendArray("sorted_strings",strings);
-    appendArray("sorted_integers",integers);
-    appendArray("sorted_floats",floats);
+    appendArray("sorted_strings",sortedStrings);
+    appendArray("sorted_integers",sortedIntegers);
+    appendArray("sorted_floats",sortedFloats);
 }
 
-$(document).ready(
-    function()
+function displayData(){
+    for(var i=0;i<data.length;i++)
     {
-        for(var i=0;i<data.length;i++)
-        {
-            $('#data_set').append(data[i]);
+        $('#data_set').append(data[i]);
 
-            if(i < data.length-1)
-            {
-                $('#data_set').append(', ');
-            }
+        if(i < data.length-1)
+        {
+            $('#data_set').append(', ');
         }
     }
-)
+}
