@@ -3,9 +3,6 @@ $(document).ready(
 )
 
 var data = [4,6,'Hi',15.4432,'Noob',47,'Omaha',4.345,'Hike',12];
-var strings = [];
-var integers = [];
-var floats = []
 var grouped = false;
 
 
@@ -31,9 +28,11 @@ function appendArray(val, array)
   }
 }
 
-function group()
+function group(data)
 {
-  if(grouped === false){
+    var strings = [];
+    var integers = [];
+    var floats = []
 
     for(var i=0;i<data.length;i++)
     {
@@ -54,28 +53,33 @@ function group()
         }
     }
     grouped = true;
-  }
+    return{
+      strings:strings,
+      integers:integers,
+      floats:floats
+    }
 }
 
 function displayGroup()
 {
   if(grouped==false)
   {
-    group();
+    var groupedObject = group(data);
 
-    appendArray("strings",strings);
-    appendArray("integers",integers);
-    appendArray("floats",floats);
+    appendArray("strings", groupedObject.strings);
+    appendArray("integers", groupedObject.integers);
+    appendArray("floats", groupedObject.floats);
   }
 }
 
 function sort()
 {
     $('div#sort > div > div').empty();
+    var groupedObject = group(data);
 
-    sortedStrings = strings.sort();
-    sortedIntegers = integers.sort(sortNumbers);
-    sortedFloats = floats.sort(sortNumbers);
+    sortedStrings = groupedObject.strings.sort();
+    sortedIntegers = groupedObject.integers.sort(sortNumbers);
+    sortedFloats = groupedObject.floats.sort(sortNumbers);
 
     appendArray("sorted_strings",sortedStrings);
     appendArray("sorted_integers",sortedIntegers);
@@ -93,3 +97,9 @@ function displayData(){
         }
     }
 }
+
+
+// module.exports={
+//   isFloat : isFloat,
+//   group:group
+// }
