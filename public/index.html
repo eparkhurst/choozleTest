@@ -1,0 +1,138 @@
+<!doctype HTML>
+<html>
+<head>
+    <title>Front End QA Test</title>
+    <script src="//code.jquery.com/jquery-2.2.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.2.0/foundation.css">
+    <style>
+        .radius { border-radius: 0.5em; }
+        .callout { background: #B5DDEB; }
+    </style>
+    <script>
+        function isFloat(n)
+        {
+            return Number(n) === n && n % 1 !== 0;
+        }
+
+        var data = [4,6,'Hi',15.4432,'Noob',47,'Omaha',4.345,'Hike',12];
+
+        var append = function(where, val) { $('#'+where+' > div').append('<div>'+val+'</div>'); };
+
+        function group()
+        {
+            for(var i=0;i<data.length;i++)
+            {
+                if(isNaN(data[i]))
+                {
+                    append('the_place', data[i]);
+                }
+                else
+                {
+                    if(isFloat(data[i]))
+                    {
+                        append('the_other_other_place', data[i]);
+                    }
+                    else
+                    {
+                        append('the_other_place', data[i]);
+                    }
+                }
+            }
+        }
+
+        function sort()
+        {
+            $('div#sort > div > div').empty();
+
+            data.sort();
+
+            for(var i=0;i<data.length;i++)
+            {
+                if(isNaN(data[i]))
+                {
+                    append('other_the_place', data[i]);
+                }
+                else
+                {
+                    if(isFloat(data[i]))
+                    {
+                        append('other_the_other_other_place', data[i]);
+                    }
+                    else
+                    {
+                        append('other_the_other_place', data[i]);
+                    }
+                }
+            }
+        }
+
+        $(document).ready(
+            function()
+            {
+                for(var i=0;i<data.length;i++)
+                {
+                    $('#data_set').append(data[i]);
+
+                    if(i < data.length-1)
+                    {
+                        $('#data_set').append(', ');
+                    }
+                }
+            }
+        )
+    </script>
+</head>
+<body>
+    <div class="row">
+        <div class="small-12 columns">
+            <h1>This is it. This is the test...</h1>
+            <h3>Your data set reads as follows</h3>
+            <div id="data_set"></div>
+            <br>
+            <div class="callout radius">
+                <p>Group should take the set <u>in the order it is listed above</u> and group the items by string, int, float.</p>
+                <a class='button small radius' href="javascript:" onClick="group();">Do Group</a>
+                <p>Sort should take the set listed above and group the items by string, int, float, but sorted in natural order.
+                Strings in string sort order, and numbers in number sort order.</p>
+                <a class='button small radius' href="javascript:" onClick="sort();">Do Sort</a>
+                <p>Each command should return the <u>same results</u> each time they are run.</p>
+            </div>
+            <h2>Unsorted Groups</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-4 columns" id="the_place">
+            <b>Strings</b>
+            <div></div>
+        </div>
+        <div class="small-4 columns" id="the_other_place">
+            <b>Integers</b>
+            <div></div>
+        </div>
+        <div class="small-4 columns" id="the_other_other_place">
+            <b>Floats</b>
+            <div></div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="small-12 columns">
+            <h2>Sorted Groups</h2>
+        </div>
+    </div>
+    <div class="row" id="sort">
+        <div class="small-4 columns" id="other_the_place">
+            <b>Strings</b>
+            <div></div>
+        </div>
+        <div class="small-4 columns" id="other_the_other_place">
+            <b>Integers</b>
+            <div></div>
+        </div>
+        <div class="small-4 columns" id="other_the_other_other_place">
+            <b>Floats</b>
+            <div></div>
+        </div>
+    </div>
+</body>
+</html>
